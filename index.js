@@ -9,7 +9,8 @@ const opts = {
     capabilities: {
         platformName: "Android",
         platformVersion: "12",
-        deviceName: "Android Emulator",
+        deviceName: "Pixel_4_API_30",
+        avd: "Pixel_4_API_30",
         // app: "/Users/christiaanvanluik/Documents/Development/appium-playground/ApiDemos-debug.apk",
         // appPackage: "io.appium.android.apis",
         // appActivity: ".view.TextFields",
