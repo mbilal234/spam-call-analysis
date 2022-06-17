@@ -1,5 +1,7 @@
 # Dynamic analysis tool of Android applications to extract spam Caller-IDs
 
+*This research is part of the [Research Project 2022](https://github.com/TU-Delft-CSE/Research-Project) of [TU Delft](https://https//github.com/TU-Delft-CSE).*
+
 ## Short description of research & tool
 Spam calls are becoming an increasing problem, with people receiving multiple spam calls per month on average. Multiple Android Applications exist that are able to detect spam calls and display a warning or block such calls. Little is known however on how these applications work and what numbers they block.
 In this research, the following question is investigated: Can we do a brute force dynamic analysis on Android spam call blocking apps, to extract Caller-ID information from apps that cannot be or is not extracted through static analysis?
@@ -13,7 +15,7 @@ First install appium, it can be installed directly from NPM:
 npm install -g appium
 ```
 
-Then install OpenCV, which is required for image comparison functions. [Detailed instructions can be found here](https://github.com/justadudewhohacks/opencv4nodejs#how-to-install)
+Then install OpenCV for Node, which is required for image comparison functions. [Detailed instructions can be found here](https://github.com/justadudewhohacks/opencv4nodejs#how-to-install)
 ```
 npm install --save opencv4nodejs
 ```
