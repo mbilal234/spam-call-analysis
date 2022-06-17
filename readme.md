@@ -51,6 +51,8 @@ optional arguments:
   --threads THREADS
 ```
 
+## Results
+Example raw results can be found in the [results](results/) folder. These include a list of 100 numbers and the result of running the tool on this number list. 
 
 ## List of apps (+ used versions)
 | Image                                                                                                               | Package ID                              | Name                                               | Version Name | Version Code |
