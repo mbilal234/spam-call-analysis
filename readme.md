@@ -1,10 +1,10 @@
-# Dynamic analysis tool of Android applications to extract spam Caller IDs
+# Dynamic analysis tool of Android applications to extract spam Caller-IDs
 
 ## Short description of research & tool
 Spam calls are becoming an increasing problem, with people receiving multiple spam calls per month on average. Multiple Android Applications exist that are able to detect spam calls and display a warning or block such calls. Little is known however on how these applications work and what numbers they block.
 In this research, the following question is investigated: Can we do a brute force dynamic analysis on Android spam call blocking apps, to extract Caller-ID information from apps that cannot be or is not extracted through static analysis?
 A tool is created that is capable of doing such a dynamic analysis, by installing multiple android apps (one at a time) on an emulator, sending emulated phone calls to the emulator, and using screenshot comparison techniques to determine whether the call is classified as allowed or blocked by the respective app. 
-This fully automated tool can test Caller-IDs on 8 different Android apps. Apart from a number of initial setup steps to install and configure the apps in the emulator, the tool takes about 1.5 seconds on average to analyse 1 Caller-ID on one app.
+This fully automated tool can test Caller-IDs on 8 different Android apps. Apart from a number of initial setup steps to install and configure the apps in the emulator, the tool takes about 1.5 seconds on average to analyze 1 Caller-ID on one app.
 
 ## Usage: 
 
@@ -22,7 +22,7 @@ Then you can run the tool, using this syntax.
 
 
 ```shell
-python3 appium-playground/main.py  
+python3 main.py  
     --google_username=YOUR_USERNAME_OR_EMAIL 
     --google_password=YOUR_PASSWORD
     --headless 
