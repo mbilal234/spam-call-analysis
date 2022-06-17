@@ -41,6 +41,7 @@ class AnalyzedApp(ABC):
 
     def perform_analysis(self, numbers, output_file):
         
+        accuracy = 0.95
         os.makedirs(f'out/{self.package_name}/screenshots', exist_ok=True)
 
         if not self.app_terminates_blocked_calls:
@@ -69,11 +70,13 @@ class AnalyzedApp(ABC):
             if self.app_terminates_blocked_calls:
 
                 status = 'allowed'
+                score = 1.0
 
                 while (time.time() - start) < 2:
                     gsm_list: str = self.driver.execute_script("mobile: execEmuConsoleCommand", {'command': 'gsm list'})
                     if(gsm_list == ''):
                         status = 'blocked'
+                        score = 1.0
                         break
 
             else:
@@ -84,7 +87,8 @@ class AnalyzedApp(ABC):
 
                     try: 
                         el = self.driver.find_image_occurrence(full_screenshot, partial_screenshot_allow)
-                        if(el['score'] > 0.9):
+                        if(el['score'] > accuracy):
+                            score = el['score']
                             status='allowed'
                             break
 
@@ -94,7 +98,8 @@ class AnalyzedApp(ABC):
 
                     try: 
                         el = self.driver.find_image_occurrence(full_screenshot, partial_screenshot_block)
-                        if(el['score'] > 0.9):
+                        if(el['score'] > accuracy):
+                            score = el['score']
                             status='blocked'
                             break
 
@@ -105,8 +110,9 @@ class AnalyzedApp(ABC):
                     if(check_caution):
                         try: 
                             el = self.driver.find_image_occurrence(full_screenshot, partial_screenshot_cation)
-                            if(el['score'] > 0.9):
+                            if(el['score'] > accuracy):
                                 status='caution'
+                                score = el['score']
                                 break
 
                         except: 
@@ -118,6 +124,7 @@ class AnalyzedApp(ABC):
 
                     if delta > 10:
                         status='timeout'
+                        score = 1.0
                         break
 
                     sleep(0.01)
@@ -134,7 +141,7 @@ class AnalyzedApp(ABC):
 
             self.driver.make_gsm_call(number, GsmCallActions.CANCEL)
 
-            csv_line = f"{number},{status},{delta}"
+            csv_line = f"{number},{self.package_name},{status},{delta},{score}"
             print(csv_line)
             with open(output_file, 'a') as fd:
                 fd.write(f'{csv_line}\n')
@@ -369,14 +376,14 @@ class Telguarder(AnalyzedApp):
         el6.click()
 
 
-# class Truecaller(AnalyzedApp):
-#
-#     package_name = 'com.truecaller'
-#
-#     def setup(self):
-#         self.driver.activate_app(self.package_name)
-#
-#         self.driver.implicitly_wait(15)
+class Truecaller(AnalyzedApp):
+
+    package_name = 'com.truecaller'
+
+    def setup(self):
+        self.driver.activate_app(self.package_name)
+
+        self.driver.implicitly_wait(15)
 
 
 class WebascenderCallerID(AnalyzedApp):
@@ -425,40 +432,40 @@ class WebascenderCallerID(AnalyzedApp):
         el9.click()
 
 
-# class UnknownphoneCallblocker(AnalyzedApp):
+class UnknownphoneCallblocker(AnalyzedApp):
 
-#     package_name = 'com.unknownphone.callblocker'
-#     needs_google_account = True
+    package_name = 'com.unknownphone.callblocker'
+    needs_google_account = True
 
-#     def setup(self):
-#         self.driver.activate_app(self.package_name)
-#         self.driver.implicitly_wait(5)
+    def setup(self):
+        self.driver.activate_app(self.package_name)
+        self.driver.implicitly_wait(5)
 
-#         sleep(5)
+        sleep(5)
 
-#         actions = ActionChains(self.driver)
-#         actions.w3c_actions = ActionBuilder(self.driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
-#         actions.w3c_actions.pointer_action.move_to_location(1041, 1013)
-#         actions.w3c_actions.pointer_action.pointer_down()
-#         actions.w3c_actions.pointer_action.move_to_location(56, 1043)
-#         actions.w3c_actions.pointer_action.release()
-#         actions.perform()
+        actions = ActionChains(self.driver)
+        actions.w3c_actions = ActionBuilder(self.driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
+        actions.w3c_actions.pointer_action.move_to_location(1041, 1013)
+        actions.w3c_actions.pointer_action.pointer_down()
+        actions.w3c_actions.pointer_action.move_to_location(56, 1043)
+        actions.w3c_actions.pointer_action.release()
+        actions.perform()
 
-#         actions.w3c_actions = ActionBuilder(self.driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
-#         actions.w3c_actions.pointer_action.move_to_location(1041, 1013)
-#         actions.w3c_actions.pointer_action.pointer_down()
-#         actions.w3c_actions.pointer_action.move_to_location(56, 1043)
-#         actions.w3c_actions.pointer_action.release()
-#         actions.perform()
+        actions.w3c_actions = ActionBuilder(self.driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
+        actions.w3c_actions.pointer_action.move_to_location(1041, 1013)
+        actions.w3c_actions.pointer_action.pointer_down()
+        actions.w3c_actions.pointer_action.move_to_location(56, 1043)
+        actions.w3c_actions.pointer_action.release()
+        actions.perform()
 
-#         el1 = self.driver.find_element(by=AppiumBy.ID, value="com.unknownphone.callblocker:id/button")
-#         el1.click()
-#         el2 = self.driver.find_element(by=AppiumBy.ID, value="com.unknownphone.callblocker:id/notNowButton")
-#         el2.click()
-#         el3 = self.driver.find_element(by=AppiumBy.ID, value="com.unknownphone.callblocker:id/positiveButton")
-#         el3.click()
-#         el4 = self.driver.find_element(by=AppiumBy.ID, value="com.unknownphone.callblocker:id/button")
-#         el4.click()
+        el1 = self.driver.find_element(by=AppiumBy.ID, value="com.unknownphone.callblocker:id/button")
+        el1.click()
+        el2 = self.driver.find_element(by=AppiumBy.ID, value="com.unknownphone.callblocker:id/notNowButton")
+        el2.click()
+        el3 = self.driver.find_element(by=AppiumBy.ID, value="com.unknownphone.callblocker:id/positiveButton")
+        el3.click()
+        el4 = self.driver.find_element(by=AppiumBy.ID, value="com.unknownphone.callblocker:id/button")
+        el4.click()
 
 
 class MistergroupShouldianswer(AnalyzedApp):

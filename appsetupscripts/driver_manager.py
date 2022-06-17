@@ -61,12 +61,10 @@ class DriverManager:
         el2 = self.driver.find_element(by=AppiumBy.XPATH, value='//android.widget.EditText[@resource-id="identifierId"]')
         el2.send_keys(username)
         el2.click()
+        sleep(2)
         self.driver.press_keycode(66)
-        sleep(1)
-        # el3 = self.driver.find_element(by=AppiumBy.XPATH, value='//android.view.View[@resource-id="identifierNext"]')
-        # el3.click()
-
-        sleep(1)
+        
+        sleep(4)
 
         el5 = self.driver.find_element(by=AppiumBy.XPATH, value='//android.view.View[@resource-id="password"]/android.view.View/android.view.View[1]/android.widget.EditText')
         el5.send_keys(password)
