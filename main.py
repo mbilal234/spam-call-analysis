@@ -110,9 +110,7 @@ if __name__ == '__main__':
         WebascenderCallerID
     ]
 
-    threads = 1
-
-    if(threads == 1):
+    if(args.threads == 1):
         for cls in classes_to_analyze:
             print(run_analysis_of_app(cls, 0, apk_directory, output_file, args))
 
@@ -125,7 +123,7 @@ if __name__ == '__main__':
                 q.task_done()
 
         q: Queue[type] = Queue()
-        for i in range(2):
+        for i in range(args.threads):
             t = threading.Thread(target=worker, args=[q, i])
             t.daemon = True
             t.start()

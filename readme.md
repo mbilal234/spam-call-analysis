@@ -1,6 +1,56 @@
+# Dynamic analysis tool of Android applications to extract spam Caller IDs
+
+## Short description of research & tool
+Spam calls are becoming an increasing problem, with people receiving multiple spam calls per month on average. Multiple Android Applications exist that are able to detect spam calls and display a warning or block such calls. Little is known however on how these applications work and what numbers they block.
+In this research, the following question is investigated: Can we do a brute force dynamic analysis on Android spam call blocking apps, to extract Caller-ID information from apps that cannot be or is not extracted through static analysis?
+A tool is created that is capable of doing such a dynamic analysis, by installing multiple android apps (one at a time) on an emulator, sending emulated phone calls to the emulator, and using screenshot comparison techniques to determine whether the call is classified as allowed or blocked by the respective app. 
+This fully automated tool can test Caller-IDs on 8 different Android apps. Apart from a number of initial setup steps to install and configure the apps in the emulator, the tool takes about 1.5 seconds on average to analyse 1 Caller-ID on one app.
+
+## Usage: 
+
+First install appium, it can be installed directly from NPM:
+```
+npm install -g appium
+```
+
+Then install OpenCV, which is required for image comparison functions. [Detailed instructions can be found here](https://github.com/justadudewhohacks/opencv4nodejs#how-to-install)
+```
+npm install --save opencv4nodejs
+```
+
+Then you can run the tool, using this syntax. 
 
 
-# List of apps (+ used versions)
+```shell
+python3 appium-playground/main.py  
+    --google_username=YOUR_USERNAME_OR_EMAIL 
+    --google_password=YOUR_PASSWORD
+    --headless 
+    --threads=1
+    number-list.txt
+```
+
+### Detailed usage:
+```
+usage: main.py [-h] --google_username GOOGLE_USERNAME --google_password GOOGLE_PASSWORD [--headless] [--threads THREADS] [infile]
+
+Test numbers on Android Spam Call Blocking Applications
+
+positional arguments:
+  infile
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --google_username GOOGLE_USERNAME
+                        A google account's username
+  --google_password GOOGLE_PASSWORD
+                        A google account's password
+  --headless
+  --threads THREADS
+```
+
+
+## List of apps (+ used versions)
 | Image                                                                                                               | Package ID                              | Name                                               | Version Name | Version Code |
 | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------- |--------------|--------------|
 | ![](https://play-lh.googleusercontent.com/csDVvK9qQ2LXkhHmdUcV2A_GmJFSG-hHR4j1NSbbfLCPbyUD-yZsfdP1o_ztXVZ6vu8=s80)  | com.flexaspect.android.everycallcontrol | Call Control - SMS/Call Blocker. Block Spam Calls! | 2.2.8        | 272          |
