@@ -15,10 +15,15 @@ git clone git@github.com:cvl01/spam-call-analysis.git
 ```
 
 ### Install Appium
-First install [appium](https://appium.io/), it can be installed directly from NPM:
+First install [Appium](https://appium.io/), it can be installed directly from NPM:
 ```
 npm install -g appium
 ```
+Then install the Appium Python Client:
+```
+pip install Appium-Python-Client
+```
+
 ### OpenCV for Node
 Then install OpenCV for Node, which is required for image comparison functions. [Detailed instructions can be found here](https://github.com/justadudewhohacks/opencv4nodejs#how-to-install)
 ```
