@@ -20,7 +20,7 @@ Then install OpenCV for Node, which is required for image comparison functions. 
 npm install --save opencv4nodejs
 ```
 
-Finally, you need to set up the emulators needed to run the analysis on. In [helper-scripts/base_emulator](helper-scripts/base_emulator/) you can find the optimal configuration of the emulator. It is adviced to use the helper script [helper-scripts/create-emulators.sh](helper-scripts/create-emulators.sh) to generate 10 emulators. You will then be able to run with a maximum of 10 threads. 
+Finally, you need to set up the emulators needed to run the analysis on. In [helper-scripts/base_emulator](helper-scripts/base_emulator/) you can find the optimal configuration of the emulator. It is advised to use the helper script [helper-scripts/create-emulators.sh](helper-scripts/create-emulators.sh) to generate 10 emulators. You will then be able to run with a maximum of 10 threads. 
 ```
 sh helper-scripts/create-emulators.sh
 ```
