@@ -39,7 +39,7 @@ class AnalyzedApp(ABC):
     def setup(self):
         pass
 
-    def perform_analysis(self, numbers, output_file):
+    def perform_analysis(self, numbers, output_file, print_csv_line=False, save_screenshot=False):
         
         accuracy = 0.95
         os.makedirs(f'out/{self.package_name}/screenshots', exist_ok=True)
@@ -82,7 +82,6 @@ class AnalyzedApp(ABC):
             else:
         
                 while True:
-                    print('.', end=' ')
                     full_screenshot = self.driver.get_screenshot_as_base64()
 
                     try: 
@@ -135,14 +134,17 @@ class AnalyzedApp(ABC):
             if(self.app_terminates_blocked_calls and status == 'allowed'):
                 delta = 0.0
 
-            print()
-            filename = f'out/{self.package_name}/screenshots/{number}.png'
-            self.driver.get_screenshot_as_file(filename=filename)
+            if(save_screenshot):
+                filename = f'out/{self.package_name}/screenshots/{number}.png'
+                self.driver.get_screenshot_as_file(filename=filename)
 
             self.driver.make_gsm_call(number, GsmCallActions.CANCEL)
 
             csv_line = f"{number},{self.package_name},{status},{delta},{score}"
-            print(csv_line)
+
+            if(print_csv_line):
+                print(csv_line) 
+
             with open(output_file, 'a') as fd:
                 fd.write(f'{csv_line}\n')
 
