@@ -8,24 +8,34 @@ In this research, the following question is investigated: Can we do a brute forc
 A tool is created that is capable of doing such a dynamic analysis, by installing multiple android apps (one at a time) on an emulator, sending emulated phone calls to the emulator, and using screenshot comparison techniques to determine whether the call is classified as allowed or blocked by the respective app. 
 This fully automated tool can test Caller-IDs on 8 different Android apps. Apart from a number of initial setup steps to install and configure the apps in the emulator, the tool takes about 1.5 seconds on average to analyze 1 Caller-ID on one app.
 
-## Usage: 
+## Installation:
+### Clone the repository 
+```
+git clone git@github.com:cvl01/spam-call-analysis.git
+```
 
-First install appium, it can be installed directly from NPM:
+### Install Appium
+First install [appium](https://appium.io/), it can be installed directly from NPM:
 ```
 npm install -g appium
 ```
-
+### OpenCV for Node
 Then install OpenCV for Node, which is required for image comparison functions. [Detailed instructions can be found here](https://github.com/justadudewhohacks/opencv4nodejs#how-to-install)
 ```
 npm install --save opencv4nodejs
 ```
 
-Finally, you need to set up the emulators needed to run the analysis on. In [helper-scripts/base_emulator](helper-scripts/base_emulator/) you can find the optimal configuration of the emulator. It is advised to use the helper script [helper-scripts/create-emulators.sh](helper-scripts/create-emulators.sh) to generate 10 emulators. You will then be able to run with a maximum of 10 threads. 
+### Set up android emulators
+Finally, you need to set up the android emulators needed to run the analysis on. In [helper-scripts/base_emulator](helper-scripts/base_emulator/) you can find the optimal configuration of the emulator. It is advised to use the helper script [helper-scripts/create-emulators.sh](helper-scripts/create-emulators.sh) to generate 10 emulators. You will then be able to run with a maximum of 10 threads. If you want another number of emulators, you can add a number as positional element, like so.
 ```
-sh helper-scripts/create-emulators.sh
+sh helper-scripts/create-emulators.sh NUMBER_OF_EMULATORS
+```
+For example:
+```
+sh helper-scripts/create-emulators.sh 4
 ```
 
-
+## Usage
 Then you can run the tool, using this syntax. The tool takes a list of numbers, one per line. An example can be found in [results/100-numbers.txt](results/100-numbers.txt). You can specify the file name as an argument or else the tool will read input from `stdin`.
 
 
