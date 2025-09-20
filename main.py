@@ -10,7 +10,6 @@ from numpy import save
 from appsetupscripts.driver_manager import DriverManager
 
 from appsetupscripts.setup import AnalyzedApp
-from appium.webdriver.appium_service import AppiumService
 from appsetupscripts.setup import *
 
 
@@ -97,8 +96,6 @@ if __name__ == '__main__':
 
     numbers = args.infile.read().splitlines()
 
-    appium_service = AppiumService()
-    appium_service.start(args=['--allow-insecure=emulator_console'])
 
     classes_to_analyze = [
         AllInOneCallerID,
@@ -133,7 +130,6 @@ if __name__ == '__main__':
 
         q.join()       # block until all tasks are done
 
-    appium_service.stop()
 
 
     print(f'Analysis done, results can be found in {output_file}.')

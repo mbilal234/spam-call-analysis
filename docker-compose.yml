@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  spam-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - MAX_DEVICES=2
+      - APPIUM_SERVER_URL=http://appium:4723
+      - GOOGLE_USERNAME=${GOOGLE_USERNAME:-}
+      - GOOGLE_PASSWORD=${GOOGLE_PASSWORD:-}
+    volumes:
+      - ./apks:/app/apks
+      - ./reference_images:/app/reference_images
+      - ./out:/app/out
+    depends_on:
+      - appium
+    networks:
+      - spam-network
+
+  appium:
+    image: appium/appium:2.0.0
+    ports:
+      - "4723:4723"
+    environment:
+      - APPIUM_SERVER_URL=http://0.0.0.0:4723
+    networks:
+      - spam-network
+
+  # Android emulator (optional - for testing)
+  android-emulator:
+    image: budtmo/docker-android:emulator_11.0
+    privileged: true
+    environment:
+      - EMULATOR_DEVICE=Samsung Galaxy S10
+      - WEB_VNC=true
+    ports:
+      - "6080:6080"  # VNC web interface
+      - "5554:5554"  # ADB
+      - "5555:5555"  # ADB
+    networks:
+      - spam-network
+
+networks:
+  spam-network:
+    driver: bridge

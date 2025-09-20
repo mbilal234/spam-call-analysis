@@ -1,0 +1,14 @@
+# Core API dependencies
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+pydantic>=2.0.0
+
+# Existing dependencies from the original project
+appium-python-client>=2.0.0
+selenium>=4.0.0
+opencv-python>=4.5.0
+numpy>=1.21.0
+
+# Additional dependencies for the API
+python-multipart>=0.0.5
+requests>=2.25.0

@@ -4,18 +4,20 @@ from time import sleep
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.webdriver import WebDriver
 from appium.webdriver.extensions.android.gsm import GsmCallActions
+from appium.options.android import UiAutomator2Options
 import selenium
 
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.actions import interaction
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
+
 # Android environment
 import inspect
 import os
 from appium import webdriver
 
-from appium.webdriver.appium_service import AppiumService
+""" from appium.webdriver.appium_service import AppiumService """
 
 class DriverManager:
     driver: WebDriver
@@ -24,10 +26,10 @@ class DriverManager:
         systemPort = 8200 + thread_index
         desired_caps = dict(
             platformName='Android',
-            platformVersion='11',
+            platformVersion='16',
             automationName='UiAutomator2',
-            deviceName='appium_emu_' + str(thread_index),
-            avd='appium_emu_' + str(thread_index),
+            deviceName='Medium_Phone_API_36.1',
+           # avd='Medium_Phone_API_36.1',
             systemPort=systemPort,
             avdArgs=['-wipe-data'],
             isHeadless=headless,
@@ -46,7 +48,12 @@ class DriverManager:
         #     disableWindowAnimation=True
         #     # app=PATH('../../../apps/selendroid-test-app.apk')
         # )
-        self.driver =  webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+        options = UiAutomator2Options()
+        for key, value in desired_caps.items():
+            options.set_capability(key, value)
+
+        print("Capabilities sent to Appium:", desired_caps)
+        self.driver =  webdriver.Remote('http://localhost:4723', options=options)
 
     def log_in_with_google_2(self, username, password):
         self.driver.implicitly_wait(8)
